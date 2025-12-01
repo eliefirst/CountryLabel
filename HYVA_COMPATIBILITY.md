@@ -178,8 +178,35 @@ Unlike modules with frontend components, this module does **NOT** require:
 
 ## Troubleshooting
 
+### 🔴 Issue: Class "CountryPlugin" not found
+
+**Symptom:**
+```
+Class "Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
+```
+
+**Cause:** DI (Dependency Injection) not compiled - plugin factories not generated
+
+**Solution:**
+```bash
+# CRITICAL: Compile DI to generate plugin interceptors
+php bin/magento setup:di:compile
+
+# Clear caches
+php bin/magento cache:flush
+
+# If still failing, remove generated files first
+rm -rf generated/code/*
+rm -rf generated/metadata/*
+php bin/magento setup:di:compile
+```
+
+**For complete installation guide:** See [INSTALLATION.md](INSTALLATION.md)
+
+---
+
 ### ⚠️ Issue: White screen / Frontend crash with Hyva (v1.0.0 only)
-**Symptom:** Hyva frontend doesn't load when module is enabled
+**Symptom:** Hyva frontend doesn't load when module is enabled (after setup:di:compile)
 
 **Cause:** Version 1.0.0 used `afterLoadByCode()` plugin that conflicted with Hyva's GraphQL
 

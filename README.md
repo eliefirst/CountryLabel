@@ -1,12 +1,29 @@
 # Elie_CountryLabel - Module Magento 2
- 
+
+## 🚨 IMPORTANT - Lisez ceci en premier !
+
+**Si vous rencontrez l'erreur :**
+```
+Class "Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
+```
+
+👉 **[Consultez le guide d'installation détaillé INSTALLATION.md](INSTALLATION.md)**
+
+**Solution rapide :**
+```bash
+php bin/magento setup:di:compile
+php bin/magento cache:flush
+```
+
+---
+
 ## 📋 Description
- 
+
 Module Magento 2 pour remplacer automatiquement "Taiwan" par "Taiwan China Region" dans toute la plateforme.
 
 **Version:** 1.0.1 ⚡ **Critical Hyva Fix**
 **Compatible:** Magento 2.4.6+ | PHP 8.1, 8.2, 8.3, 8.4 | **Hyva Theme ✅**
- 
+
 ---
  
 ## ✨ Fonctionnalités
@@ -31,19 +48,26 @@ Module Magento 2 pour remplacer automatiquement "Taiwan" par "Taiwan China Regio
  
 ## 📦 Installation
 
-### Nouvelle installation
+### ⚠️ Guide d'installation complet
+
+**Pour une installation sans erreur "Class not found" :**
+👉 **[Consultez INSTALLATION.md pour le guide complet](INSTALLATION.md)**
+
+### Installation rapide (résumé)
 
 ```bash
 # 1. Copier le module
 cp -r CountryLabel /path/to/magento/app/code/Elie/
 
-# 2. Activer
+# 2. Activer et installer
 php bin/magento module:enable Elie_CountryLabel
 php bin/magento setup:upgrade
-php bin/magento setup:di:compile
+php bin/magento setup:di:compile  # CRITIQUE - évite "Class not found"
 php bin/magento setup:static-content:deploy -f
 php bin/magento cache:flush
 ```
+
+**⚠️ La commande `setup:di:compile` est OBLIGATOIRE** sinon vous aurez l'erreur "Class not found"
 
 ### ⚡ Migration v1.0.0 → v1.0.1 (Hyva Fix)
 
@@ -179,15 +203,19 @@ CountryLabel/
 ## 📝 Changelog
 
 ### v1.0.1 (2025-12-01) ⚡ **CRITICAL HYVA FIX**
-- 🔴 **FIX:** Résout le crash frontend avec Hyva Theme
-- ✅ Suppression du plugin `afterLoadByCode()` (causait conflit GraphQL)
+- 🔴 **FIX MAJEUR:** Résout l'erreur `Class "CountryPlugin" not found`
+- 🔴 **FIX MAJEUR:** Résout le crash frontend avec Hyva Theme
+- ✅ Suppression du plugin `afterLoadByCode()` (causait conflit GraphQL avec Hyva)
 - ✅ Amélioration du plugin `afterGetName()` avec type checking robuste
 - ✅ Ajout de validation pour éviter les erreurs avec objets Country non initialisés
+- ✅ Ajout de `minimum-stability` dans composer.json
+- ✅ Création du guide INSTALLATION.md avec troubleshooting complet
 - ✅ Compatible Hyva Theme (testé et validé)
 - ✅ Compatible Luma Theme (pas de régression)
 - ✅ Meilleure gestion des edge cases
 
 **⚠️ Si vous utilisez v1.0.0 avec Hyva :** Mettez à jour immédiatement !
+**⚠️ Si vous avez "Class not found" :** Exécutez `php bin/magento setup:di:compile`
 
 ### v1.0.0 (2024-11-27)
 - ✅ Première version

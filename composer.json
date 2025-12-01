@@ -22,5 +22,6 @@
         "psr-4": {
             "Elie\\CountryLabel\\": ""
         }
-    }
+    },
+    "minimum-stability": "stable"
 }
