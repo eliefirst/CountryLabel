@@ -114,11 +114,14 @@ php bin/magento setup:di:compile
 ---
  
 ## 📊 Compatibilité
- 
+
 - ✅ Magento 2.4.6+
 - ✅ PHP 8.1 - 8.4
 - ✅ Tous modules tiers utilisant `Country` standard
- 
+- ✅ **Hyva Theme** - Compatible à 100% (voir [HYVA_COMPATIBILITY.md](HYVA_COMPATIBILITY.md))
+- ✅ Luma Theme
+- ✅ Tous thèmes personnalisés
+
 ---
  
 ## ⚠️ Notes
