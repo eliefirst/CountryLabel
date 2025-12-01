@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Elie\CountryLabel\Plugin\Directory\Model;
+namespace ElielWeb\CountryLabel\Plugin\Directory\Model;
 
 use Magento\Directory\Model\Country;
 

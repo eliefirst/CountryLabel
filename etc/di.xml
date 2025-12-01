@@ -11,7 +11,7 @@
     <!-- Plugin to override country name -->
     <type name="Magento\Directory\Model\Country">
         <plugin name="elie_country_label_override"
-                type="Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin"
+                type="ElielWeb\CountryLabel\Plugin\Directory\Model\CountryPlugin"
                 sortOrder="10"/>
     </type>
  

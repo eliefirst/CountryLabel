@@ -20,7 +20,7 @@
             "registration.php"
         ],
         "psr-4": {
-            "Elie\\CountryLabel\\": ""
+            "ElielWeb\\CountryLabel\\": ""
         }
     },
     "minimum-stability": "stable"

@@ -10,7 +10,7 @@
 
 ## Compatibility Overview
 
-The `Elie_CountryLabel` module is **100% compatible** with Hyva Theme.
+The `ElielWeb_CountryLabel` module is **100% compatible** with Hyva Theme.
 
 ### ⚠️ Version 1.0.1 - Critical Hyva Fix
 
@@ -88,7 +88,7 @@ User Request
     ↓
 Magento Controller
     ↓
-Country Model (Plugin intercepts here ← Elie_CountryLabel)
+Country Model (Plugin intercepts here ← ElielWeb_CountryLabel)
     ↓
 Modified Country Name
     ↓
@@ -113,10 +113,10 @@ No special steps required! Follow standard installation:
 
 ```bash
 # 1. Copy module
-cp -r CountryLabel /path/to/magento/app/code/Elie/
+cp -r CountryLabel /path/to/magento/app/code/ElielWeb/
 
 # 2. Enable
-php bin/magento module:enable Elie_CountryLabel
+php bin/magento module:enable ElielWeb_CountryLabel
 php bin/magento setup:upgrade
 php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy -f
@@ -182,7 +182,7 @@ Unlike modules with frontend components, this module does **NOT** require:
 
 **Symptom:**
 ```
-Class "Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
+Class "ElielWeb\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
 ```
 
 **Cause:** DI (Dependency Injection) not compiled - plugin factories not generated
@@ -213,7 +213,7 @@ php bin/magento setup:di:compile
 **Solution:**
 ```bash
 # Upgrade to v1.0.1 or later
-cd app/code/Elie/CountryLabel
+cd app/code/ElielWeb/CountryLabel
 git pull origin main
 
 # Or manually update CountryPlugin.php (remove afterLoadByCode method)
@@ -234,7 +234,7 @@ php bin/magento cache:flush
 php bin/magento setup:di:compile
 
 # Verify module is enabled
-php bin/magento module:status Elie_CountryLabel
+php bin/magento module:status ElielWeb_CountryLabel
 ```
 
 ### Issue: Works in Luma but not Hyva (v1.0.1+)

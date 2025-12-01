@@ -1,10 +1,10 @@
-# Installation Guide - Elie_CountryLabel
+# Installation Guide - ElielWeb_CountryLabel
 
 ## 🔴 Fixing "Class not found" Error
 
 If you get this error:
 ```
-Class "Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
+Class "ElielWeb\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
 ```
 
 Follow this guide step-by-step.
@@ -37,15 +37,15 @@ cd /path/to/your/magento
 mkdir -p app/code/Elie
 
 # Copy the module (adjust path to where you have the module)
-cp -r /path/to/CountryLabel app/code/Elie/
+cp -r /path/to/CountryLabel app/code/ElielWeb/
 
 # Verify the files are in place
-ls -la app/code/Elie/CountryLabel/
+ls -la app/code/ElielWeb/CountryLabel/
 ```
 
 **Expected directory structure:**
 ```
-app/code/Elie/CountryLabel/
+app/code/ElielWeb/CountryLabel/
 ├── Plugin/
 │   └── Directory/
 │       └── Model/
@@ -70,13 +70,13 @@ app/code/Elie/CountryLabel/
 cd /path/to/your/magento
 
 # Set ownership (replace www-data with your web server user)
-chown -R www-data:www-data app/code/Elie/CountryLabel/
+chown -R www-data:www-data app/code/ElielWeb/CountryLabel/
 
 # Set directory permissions
-find app/code/Elie/CountryLabel/ -type d -exec chmod 755 {} \;
+find app/code/ElielWeb/CountryLabel/ -type d -exec chmod 755 {} \;
 
 # Set file permissions
-find app/code/Elie/CountryLabel/ -type f -exec chmod 644 {} \;
+find app/code/ElielWeb/CountryLabel/ -type f -exec chmod 644 {} \;
 ```
 
 #### Step 3: Enable the Module
@@ -86,10 +86,10 @@ find app/code/Elie/CountryLabel/ -type f -exec chmod 644 {} \;
 cd /path/to/your/magento
 
 # Enable the module
-php bin/magento module:enable Elie_CountryLabel
+php bin/magento module:enable ElielWeb_CountryLabel
 
 # Verify it's enabled
-php bin/magento module:status Elie_CountryLabel
+php bin/magento module:status ElielWeb_CountryLabel
 # Should show: "Module is enabled"
 ```
 
@@ -128,7 +128,7 @@ php bin/magento indexer:reindex
 
 ```bash
 # Check module status
-php bin/magento module:status Elie_CountryLabel
+php bin/magento module:status ElielWeb_CountryLabel
 
 # Check if plugin is registered
 php bin/magento setup:di:compile-multi-tenant 2>&1 | grep CountryPlugin
@@ -152,7 +152,7 @@ If you want to install via Composer:
 cd /path/to/your/magento
 
 # Add local repository
-composer config repositories.elie-country-label path app/code/Elie/CountryLabel
+composer config repositories.elie-country-label path app/code/ElielWeb/CountryLabel
 
 # Require the module
 composer require elie/module-country-label:@dev
@@ -176,19 +176,19 @@ Same as above (enable module, run setup commands, verify).
 1. **Module not in correct directory**
    ```bash
    # Verify path exists
-   ls -la app/code/Elie/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
+   ls -la app/code/ElielWeb/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
    # If file not found, your module is in the wrong place
    ```
 
 2. **registration.php not loaded**
    ```bash
    # Check if registration.php is readable
-   cat app/code/Elie/CountryLabel/registration.php
+   cat app/code/ElielWeb/CountryLabel/registration.php
 
    # Verify it contains:
    # \Magento\Framework\Component\ComponentRegistrar::register(
    #     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-   #     'Elie_CountryLabel',
+   #     'ElielWeb_CountryLabel',
    #     __DIR__
    # );
    ```
@@ -206,10 +206,10 @@ Same as above (enable module, run setup commands, verify).
 4. **PHP namespace/class mismatch**
    ```bash
    # Verify the class file has correct namespace
-   head -20 app/code/Elie/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
+   head -20 app/code/ElielWeb/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
 
    # Should show:
-   # namespace Elie\CountryLabel\Plugin\Directory\Model;
+   # namespace ElielWeb\CountryLabel\Plugin\Directory\Model;
    # class CountryPlugin
    ```
 
@@ -248,11 +248,11 @@ If you followed all steps above and Hyva still doesn't work:
 
 ```bash
 # 1. Verify you have v1.0.1+ (not v1.0.0)
-cat app/code/Elie/CountryLabel/composer.json | grep version
+cat app/code/ElielWeb/CountryLabel/composer.json | grep version
 # Should show: "version": "1.0.1"
 
 # 2. Check if afterLoadByCode exists (it should NOT in v1.0.1)
-grep -n "afterLoadByCode" app/code/Elie/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
+grep -n "afterLoadByCode" app/code/ElielWeb/CountryLabel/Plugin/Directory/Model/CountryPlugin.php
 # Should return: no results
 
 # 3. Clear Hyva cache
@@ -268,8 +268,8 @@ php bin/magento cache:flush
 ### Test 1: Check Module is Loaded
 
 ```bash
-php bin/magento module:status Elie_CountryLabel
-# Expected: "Elie_CountryLabel" in "List of enabled modules"
+php bin/magento module:status ElielWeb_CountryLabel
+# Expected: "ElielWeb_CountryLabel" in "List of enabled modules"
 ```
 
 ### Test 2: Check Plugin is Registered
@@ -321,9 +321,9 @@ tail -100 var/log/system.log | grep -i "elie\|country"
 
 ## Production Deployment Checklist
 
-- [ ] Module files copied to `app/code/Elie/CountryLabel/`
+- [ ] Module files copied to `app/code/ElielWeb/CountryLabel/`
 - [ ] File permissions set correctly (755 for dirs, 644 for files)
-- [ ] `php bin/magento module:enable Elie_CountryLabel` executed
+- [ ] `php bin/magento module:enable ElielWeb_CountryLabel` executed
 - [ ] `php bin/magento setup:upgrade` executed
 - [ ] `php bin/magento setup:di:compile` executed (MOST IMPORTANT!)
 - [ ] `php bin/magento setup:static-content:deploy` executed
@@ -341,7 +341,7 @@ If something goes wrong:
 
 ```bash
 # 1. Disable the module
-php bin/magento module:disable Elie_CountryLabel
+php bin/magento module:disable ElielWeb_CountryLabel
 
 # 2. Run setup upgrade
 php bin/magento setup:upgrade
@@ -353,7 +353,7 @@ php bin/magento setup:di:compile
 php bin/magento cache:flush
 
 # 5. (Optional) Remove files
-rm -rf app/code/Elie/CountryLabel/
+rm -rf app/code/ElielWeb/CountryLabel/
 ```
 
 ---

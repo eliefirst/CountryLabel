@@ -1,10 +1,10 @@
-# Elie_CountryLabel - Module Magento 2
+# ElielWeb_CountryLabel - Module Magento 2
 
 ## 🚨 IMPORTANT - Lisez ceci en premier !
 
 **Si vous rencontrez l'erreur :**
 ```
-Class "Elie\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
+Class "ElielWeb\CountryLabel\Plugin\Directory\Model\CountryPlugin" not found
 ```
 
 👉 **[Consultez le guide d'installation détaillé INSTALLATION.md](INSTALLATION.md)**
@@ -57,10 +57,10 @@ Module Magento 2 pour remplacer automatiquement "Taiwan" par "Taiwan China Regio
 
 ```bash
 # 1. Copier le module
-cp -r CountryLabel /path/to/magento/app/code/Elie/
+cp -r CountryLabel /path/to/magento/app/code/ElielWeb/
 
 # 2. Activer et installer
-php bin/magento module:enable Elie_CountryLabel
+php bin/magento module:enable ElielWeb_CountryLabel
 php bin/magento setup:upgrade
 php bin/magento setup:di:compile  # CRITIQUE - évite "Class not found"
 php bin/magento setup:static-content:deploy -f
@@ -75,7 +75,7 @@ Si vous utilisez déjà v1.0.0 et rencontrez des problèmes avec Hyva :
 
 ```bash
 # 1. Mettre à jour les fichiers du module
-cd /path/to/magento/app/code/Elie/CountryLabel
+cd /path/to/magento/app/code/ElielWeb/CountryLabel
 git pull origin main
 
 # OU copier manuellement les nouveaux fichiers
@@ -147,7 +147,7 @@ curl -X GET "/rest/V1/directory/countries/TW"
  
 ```bash
 # Module activé ?
-php bin/magento module:status Elie_CountryLabel
+php bin/magento module:status ElielWeb_CountryLabel
  
 # Vider caches
 php bin/magento cache:flush

@@ -6,6 +6,6 @@
  
 \Magento\Framework\Component\ComponentRegistrar::register(
     \Magento\Framework\Component\ComponentRegistrar::MODULE,
-    'Elie_CountryLabel',
+    'ElielWeb_CountryLabel',
     __DIR__
 );
