@@ -3,9 +3,9 @@
 ## 📋 Description
  
 Module Magento 2 pour remplacer automatiquement "Taiwan" par "Taiwan China Region" dans toute la plateforme.
- 
-**Version:** 1.0.0
-**Compatible:** Magento 2.4.8-p3 | PHP 8.1, 8.2, 8.3, 8.4
+
+**Version:** 1.0.1 ⚡ **Critical Hyva Fix**
+**Compatible:** Magento 2.4.6+ | PHP 8.1, 8.2, 8.3, 8.4 | **Hyva Theme ✅**
  
 ---
  
@@ -30,11 +30,13 @@ Module Magento 2 pour remplacer automatiquement "Taiwan" par "Taiwan China Regio
 ---
  
 ## 📦 Installation
- 
+
+### Nouvelle installation
+
 ```bash
 # 1. Copier le module
 cp -r CountryLabel /path/to/magento/app/code/Elie/
- 
+
 # 2. Activer
 php bin/magento module:enable Elie_CountryLabel
 php bin/magento setup:upgrade
@@ -42,7 +44,26 @@ php bin/magento setup:di:compile
 php bin/magento setup:static-content:deploy -f
 php bin/magento cache:flush
 ```
- 
+
+### ⚡ Migration v1.0.0 → v1.0.1 (Hyva Fix)
+
+Si vous utilisez déjà v1.0.0 et rencontrez des problèmes avec Hyva :
+
+```bash
+# 1. Mettre à jour les fichiers du module
+cd /path/to/magento/app/code/Elie/CountryLabel
+git pull origin main
+
+# OU copier manuellement les nouveaux fichiers
+
+# 2. Recompiler (important!)
+php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy -f
+php bin/magento cache:flush
+
+# 3. Tester Hyva - devrait fonctionner maintenant!
+```
+
 ---
  
 ## 🎯 Mapping par défaut
@@ -156,13 +177,25 @@ CountryLabel/
 ---
  
 ## 📝 Changelog
- 
+
+### v1.0.1 (2025-12-01) ⚡ **CRITICAL HYVA FIX**
+- 🔴 **FIX:** Résout le crash frontend avec Hyva Theme
+- ✅ Suppression du plugin `afterLoadByCode()` (causait conflit GraphQL)
+- ✅ Amélioration du plugin `afterGetName()` avec type checking robuste
+- ✅ Ajout de validation pour éviter les erreurs avec objets Country non initialisés
+- ✅ Compatible Hyva Theme (testé et validé)
+- ✅ Compatible Luma Theme (pas de régression)
+- ✅ Meilleure gestion des edge cases
+
+**⚠️ Si vous utilisez v1.0.0 avec Hyva :** Mettez à jour immédiatement !
+
 ### v1.0.0 (2024-11-27)
 - ✅ Première version
-- ✅ Plugin sur `Country::getName()`
+- ✅ Plugin sur `Country::getName()` et `Country::loadByCode()`
 - ✅ Traductions i18n
 - ✅ Mapping Taiwan → Taiwan China Region
 - ✅ Compatible Magento 2.4.8-p3 / PHP 8.4
+- ❌ **Incompatible Hyva Theme** (corrigé en v1.0.1)
  
 ---
  

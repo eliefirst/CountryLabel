@@ -2,7 +2,7 @@
 
 ## ✅ Status: FULLY COMPATIBLE
 
-**Version:** 1.0.0
+**Version:** 1.0.1
 **Last Updated:** 2025-12-01
 **Hyva Versions:** All versions
 
@@ -10,7 +10,22 @@
 
 ## Compatibility Overview
 
-The `Elie_CountryLabel` module is **100% compatible** with Hyva Theme out of the box.
+The `Elie_CountryLabel` module is **100% compatible** with Hyva Theme.
+
+### ⚠️ Version 1.0.1 - Critical Hyva Fix
+
+**Previous Issue (v1.0.0):**
+- Module used both `afterGetName()` and `afterLoadByCode()` plugins
+- The `afterLoadByCode()` plugin modified Country data directly with `setData()`
+- This caused conflicts with Hyva's GraphQL resolvers and caching mechanism
+- **Symptom:** White screen / frontend crash when Hyva Theme was enabled
+
+**Fix Applied (v1.0.1):**
+- ✅ Removed `afterLoadByCode()` plugin entirely
+- ✅ Kept only `afterGetName()` plugin (sufficient for all use cases)
+- ✅ Added proper type checking and validation
+- ✅ Avoids GraphQL/cache conflicts
+- ✅ Now works seamlessly with Hyva Theme
 
 ### Why This Module is Hyva Compatible
 
@@ -27,15 +42,32 @@ The `Elie_CountryLabel` module is **100% compatible** with Hyva Theme out of the
 - ❌ No custom frontend templates
 
 #### 3. Theme-Agnostic Design
-The module intercepts country data at the model level:
+The module intercepts country data at the model level using a single, safe plugin:
 ```php
-// CountryPlugin.php
+// CountryPlugin.php - v1.0.1
 public function afterGetName(Country $subject, ?string $result): ?string
 {
-    // Modifies data before it reaches ANY theme
+    // Safe read-only interception - no data modification
+    // Works with GraphQL, REST API, and all themes
+    if ($result === null || $result === '') {
+        return $result;
+    }
+
+    $countryCode = $subject->getCountryId();
+
+    if (!is_string($countryCode) || $countryCode === '') {
+        return $result;
+    }
+
     return $this->countryLabelMapping[$countryCode] ?? $result;
 }
 ```
+
+**Why this approach works:**
+- ✅ Read-only interception (doesn't modify object state)
+- ✅ No cache conflicts
+- ✅ Safe with GraphQL resolvers
+- ✅ Proper type checking for edge cases
 
 This works with:
 - ✅ Hyva Theme
@@ -146,6 +178,25 @@ Unlike modules with frontend components, this module does **NOT** require:
 
 ## Troubleshooting
 
+### ⚠️ Issue: White screen / Frontend crash with Hyva (v1.0.0 only)
+**Symptom:** Hyva frontend doesn't load when module is enabled
+
+**Cause:** Version 1.0.0 used `afterLoadByCode()` plugin that conflicted with Hyva's GraphQL
+
+**Solution:**
+```bash
+# Upgrade to v1.0.1 or later
+cd app/code/Elie/CountryLabel
+git pull origin main
+
+# Or manually update CountryPlugin.php (remove afterLoadByCode method)
+
+# Then recompile
+php bin/magento setup:di:compile
+php bin/magento setup:static-content:deploy -f
+php bin/magento cache:flush
+```
+
 ### Issue: Country name not changed in Hyva
 **Solution:**
 ```bash
@@ -159,10 +210,11 @@ php bin/magento setup:di:compile
 php bin/magento module:status Elie_CountryLabel
 ```
 
-### Issue: Works in Luma but not Hyva
-**This should never happen** because:
+### Issue: Works in Luma but not Hyva (v1.0.1+)
+**This should not happen** with v1.0.1+:
 - Module operates at model level (before theme layer)
-- If you see this, check module is enabled and caches are cleared
+- v1.0.1 removes GraphQL conflicts
+- If you still see issues, verify you're on v1.0.1+ and caches are cleared
 
 ---
 
