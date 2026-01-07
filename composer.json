@@ -1,5 +1,5 @@
 {
-    "name": "elie/module-country-label",
+    "name": "elielweb/module-country-label",
     "description": "Override country labels in Magento 2 - Replace Taiwan with Taiwan China Region across all admin, frontend, API, exports, and PDF",
     "type": "magento2-module",
     "version": "1.0.1",
