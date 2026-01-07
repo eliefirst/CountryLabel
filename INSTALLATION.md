@@ -142,28 +142,112 @@ tail -f var/log/exception.log
 
 ---
 
-### Method 2: Composer Installation (For Production)
+### Method 2: Composer Installation in vendor/ (Recommended for Production)
 
-If you want to install via Composer:
+Install the module in `vendor/elielweb/module-country-label/` via Composer.
 
-#### Step 1: Add to composer.json
+#### Option A: Via Git Repository (Best for private modules)
+
+**Step 1: Add Git repository to your Magento's composer.json**
 
 ```bash
 cd /path/to/your/magento
 
-# Add local repository
-composer config repositories.elie-country-label path app/code/ElielWeb/CountryLabel
+# Add the Git repository
+composer config repositories.elielweb-countrylabel vcs https://github.com/eliefirst/CountryLabel
 
 # Require the module
-composer require elie/module-country-label:@dev
-
-# Or for specific version
-composer require elie/module-country-label:^1.0.1
+composer require elielweb/module-country-label
 ```
 
-#### Step 2: Follow Steps 3-5 from Method 1
+Or manually edit your Magento's `composer.json`:
 
-Same as above (enable module, run setup commands, verify).
+```json
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/eliefirst/CountryLabel"
+        }
+    ],
+    "require": {
+        "elielweb/module-country-label": "^1.0.1"
+    }
+}
+```
+
+Then run:
+```bash
+composer install
+```
+
+**The module will be installed in:** `vendor/elielweb/module-country-label/`
+
+#### Option B: Via Private Packagist or Satis
+
+If you use a private Composer repository:
+
+```bash
+cd /path/to/your/magento
+
+# Add your private repository URL
+composer config repositories.private-repo composer https://your-satis-url.com
+
+# Require the module
+composer require elielweb/module-country-label:^1.0.1
+```
+
+#### Option C: Via Path Repository (For local development)
+
+If you have the module locally and want to test:
+
+```bash
+cd /path/to/your/magento
+
+# Add local path repository
+composer config repositories.elielweb-countrylabel path ../CountryLabel
+
+# Require the module
+composer require elielweb/module-country-label:@dev
+
+# Create symlink (use --prefer-source)
+composer install --prefer-source
+```
+
+#### Step 2: Enable and Install the Module
+
+After Composer installation, run Magento commands:
+
+```bash
+# Enable the module
+php bin/magento module:enable ElielWeb_CountryLabel
+
+# Run setup upgrade
+php bin/magento setup:upgrade
+
+# CRITICAL: Compile DI (fixes "Class not found")
+php bin/magento setup:di:compile
+
+# Deploy static content
+php bin/magento setup:static-content:deploy -f
+
+# Clear caches
+php bin/magento cache:flush
+```
+
+#### Verify Composer Installation
+
+```bash
+# Check module is in vendor/
+ls -la vendor/elielweb/module-country-label/
+
+# Should show all module files
+# Expected: registration.php, composer.json, Plugin/, etc/
+
+# Check module status
+php bin/magento module:status ElielWeb_CountryLabel
+# Expected: Module is enabled
+```
 
 ---
 
