@@ -156,9 +156,15 @@ cd /path/to/your/magento
 # Add the Git repository
 composer config repositories.elielweb-countrylabel vcs https://github.com/eliefirst/CountryLabel
 
-# Require the module
-composer require elielweb/module-country-label
+# Require the module with specific version
+composer require elielweb/module-country-label:^1.0.1
+
+# OR install from main branch (if tag v1.0.1 doesn't exist yet)
+composer require elielweb/module-country-label:dev-main
 ```
+
+**Note:** If you get "does not match the constraint" error, use `dev-main` instead of version number.
+Tags must be created on the main branch for Composer to recognize versions.
 
 Or manually edit your Magento's `composer.json`:
 
@@ -172,6 +178,7 @@ Or manually edit your Magento's `composer.json`:
     ],
     "require": {
         "elielweb/module-country-label": "^1.0.1"
+        // OR use "dev-main" if tag doesn't exist yet
     }
 }
 ```
@@ -182,6 +189,22 @@ composer install
 ```
 
 **The module will be installed in:** `vendor/elielweb/module-country-label/`
+
+**Creating version tags (for maintainers):**
+
+To enable version-based installation (`^1.0.1` instead of `dev-main`), create a Git tag:
+
+```bash
+# After merging to main branch
+git checkout main
+git pull origin main
+
+# Create and push tag
+git tag -a v1.0.1 -m "Release v1.0.1 - Hyva compatible"
+git push origin v1.0.1
+
+# Now users can install with: composer require elielweb/module-country-label:^1.0.1
+```
 
 #### Option B: Via Private Packagist or Satis
 
